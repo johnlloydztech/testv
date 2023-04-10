@@ -31,19 +31,24 @@ const Control = () => {
   useEffect(() => {
     const fermentationRef = ref(db, "Data/Control/Fermentation");
     const dryingRef = ref(db, "Data/Control/Drying");
-  
+    const moistureRef = ref(db, "Data/Moisture");
+    const dayRef = ref(db, "Data/Day");
     const handleFermentationChange = (snapshot) => {
       const fermentationValue = snapshot.val();
-      if (fermentationValue === 0) {
-        set(dryingRef, 1);
+      if (fermentationValue === 1) {
+        setButton1On(true);
+        setButton2On(false);
+      } else {
         setButton1On(false);
         setButton2On(true);
+        set(dryingRef, 0);
       }
     };
+    
   
     const handleDryingChange = (snapshot) => {
       const dryingRefValue = snapshot.val();
-      if (dryingRefValue === 0 ) {
+      if (dryingRefValue === 0) {
         setButton2On(false);
       }
     };
@@ -51,19 +56,14 @@ const Control = () => {
     const handleMoistureAndDayChange = (moistureSnapshot, daySnapshot) => {
       const moistureData = moistureSnapshot.val();
       const dayData = daySnapshot.val();
-      if (dayData <= 5 && (moistureData < 5.5 || moistureData > 7.5)) {
-        setButton1On(false);
-        setButton2On(true);
-        set(dryingRef, 1);
-      } else if (dayData >= 5 && moistureData >= 5.5 && moistureData <= 7.5) {
-        setButton2On(false);
+      if (dayData <= 5) {
         set(dryingRef, 0);
-      } else {
-        setButton2On(false);
+      } else if (dayData > 5 && (moistureData < 5.5 || moistureData > 7.5)) {
         set(dryingRef, 1);
+      } else {
+        set(dryingRef, 0);
       }
     };
-    
   
     onValue(fermentationRef, handleFermentationChange);
     onValue(dryingRef, handleDryingChange);
@@ -81,6 +81,7 @@ const Control = () => {
       off(dayRef);
     };
   }, [db]);
+  
   
   
   
