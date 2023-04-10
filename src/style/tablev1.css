@@ -1,0 +1,28 @@
+.Tablev1 {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* Add this line */
+    }
+
+    table1 {
+        margin: 0 auto; /* This will center the table horizontally */
+        width: 80%; /* You can adjust the width to your preference */
+        /* You can also add other styles to the table as needed */
+      }
+    
+    table {
+    border: 2px solid forestgreen;
+    width: 800px;
+    height: 200px;
+    }
+    
+    th {
+    border-bottom: 1px solid black;
+    }
+    
+    td {
+    text-align: center;
+    }
+    

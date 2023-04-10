@@ -1,0 +1,39 @@
+.team-members {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  .team-member {
+    width: 300px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .team-members {
+      flex-wrap: wrap;
+    }
+  
+    .team-member {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  .team-section {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .team-section h2 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+  }
+  
+  .team-members {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }

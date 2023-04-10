@@ -1,0 +1,111 @@
+.toggle-switch {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 50px;
+  position: relative;
+}
+
+.toggle-switch:before {
+  content: "";
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+}
+
+.button {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 75px;
+  border-radius: 60px;
+  background-color: #ddd;
+  cursor: pointer;
+  font-size: 48px;
+  color: #555;
+}
+
+.button:before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  width: 65px;
+  height: 65px;
+  border-radius: 60px;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.button.on {
+  background-color: #6aad35;
+  color: black;
+}
+
+.button.on:before {
+  transform: translateX(75px);
+}
+
+.button.off:before {
+  transform: translateX(0px);
+}
+
+.button.on:after {
+  content: "Start";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button.off:after {
+  content: "Stop";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* .toggle-switch:nth-of-type(1):before {
+	content: "Fermentation";
+}
+
+.toggle-switch:nth-of-type(2):before {
+	content: "Drying";
+} */
+
+@media only screen and (max-width: 768px) {
+  .toggle-switch {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .button {
+    width: 80px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .button:before {
+    left: 2px;
+    top: 2px;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+  }
+
+  .button.on:after {
+    font-size: 14px;
+  }
+
+  .button.off:after {
+    font-size: 14px;
+  }
+
+  .toggle-switch:before {
+    font-size: 18px;
+    top: -24px;
+  }
+}
