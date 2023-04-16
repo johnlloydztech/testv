@@ -40,8 +40,6 @@ const Control = () => {
         setButton2On(false);
       } else {
         setButton1On(false);
-        setButton2On(true);
-        set(dryingRef, 0);
       }
     };
     
@@ -56,14 +54,21 @@ const Control = () => {
     const handleMoistureAndDayChange = (moistureSnapshot, daySnapshot) => {
       const moistureData = moistureSnapshot.val();
       const dayData = daySnapshot.val();
-      if (dayData <= 5) {
+      if (dayData === 5 || dayData > 4) {
+        setButton2On(true);
+        set(dryingRef, 1);
+      } else if (dayData <= 5) {
+        setButton2On(false);
         set(dryingRef, 0);
-      } else if (dayData > 5 && (moistureData < 5.5 || moistureData > 7.5)) {
+      } else if (moistureData < 5.5 || moistureData > 7.5) {
+        setButton2On(true);
         set(dryingRef, 1);
       } else {
+        setButton2On(false);
         set(dryingRef, 0);
       }
     };
+    
   
     onValue(fermentationRef, handleFermentationChange);
     onValue(dryingRef, handleDryingChange);
