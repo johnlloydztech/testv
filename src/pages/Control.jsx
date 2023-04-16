@@ -40,6 +40,7 @@ const Control = () => {
         setButton2On(false);
       } else {
         setButton1On(false);
+
       }
     };
     
@@ -50,6 +51,7 @@ const Control = () => {
         setButton2On(false);
       }
     };
+    
   
     const handleMoistureAndDayChange = (moistureSnapshot, daySnapshot) => {
       const moistureData = moistureSnapshot.val();
@@ -68,7 +70,6 @@ const Control = () => {
         set(dryingRef, 0);
       }
     };
-    
   
     onValue(fermentationRef, handleFermentationChange);
     onValue(dryingRef, handleDryingChange);
@@ -108,6 +109,9 @@ const Control = () => {
 
   const handleButton2Click = () => {
     const db = getDatabase();
+    if (day < 5) {
+      return; // do nothing if day is less than 5
+      }
     set(ref(db, 'Data/Control'), {
       Fermentation: button1On ? 1 : 0,
       Drying: !button2On ? 1 : 0,
@@ -135,7 +139,7 @@ const Control = () => {
         <button
           className={`button ${button2On ? 'on' : 'off'}`}
           onClick={handleButton2Click}
-          disabled={button1On}
+          disabled={button1On || day < 5}  // disable button2 if day is less than 5
         ></button>
         {button2On && <p>Drying is processing</p>}
       </div>
