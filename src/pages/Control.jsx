@@ -6,7 +6,7 @@ const Control = () => {
   const [button1On, setButton1On] = useState(false);
   const [button2On, setButton2On] = useState(false);
   const [moisture, setMoisture] = useState(null);
-  const [day, setDay] = useState(null);
+  const [day, setDay] = useState(0); // initialize day to 0 or another default value
   const db = getDatabase();
 
   const dayRef = ref(db, 'Data/day');
