@@ -59,7 +59,7 @@ const Control = () => {
       if (dayData === 5 || dayData > 4) {
         setButton2On(true);
         set(dryingRef, 1);
-      } else if (dayData <= 5) {
+      } else if (dayData < 5) {
         setButton2On(false);
         set(dryingRef, 0);
       } else if (moistureData < 5.5 || moistureData > 7.5) {
