@@ -6,25 +6,21 @@ const Control = () => {
   const [button1On, setButton1On] = useState(false);
   const [button2On, setButton2On] = useState(false);
   const [moisture, setMoisture] = useState(null);
-  const [day, setDay] = useState(0); // initialize day to 0 or another default value
+  const [day, setDay] = useState(0);
   const db = getDatabase();
 
-  const dayRef = ref(db, 'Data/day');
+  const moistureRef = ref(db, 'Data/Moisture');
+  const dayRef = ref(db, 'Data/Day');
 
-
-  useEffect(() => {
-    onValue(dayRef, (snapshot) => {
-      const data = snapshot.val();
-      setDay(data);
-    });
-  }, []);
-
-  const moistureRef = ref(db, 'Data/Moisture'); // Moisture
 
   useEffect(() => {
     onValue(moistureRef, (snapshot) => {
       const data = snapshot.val();
       setMoisture(data);
+    });
+    onValue(dayRef, (snapshot) => {
+      const data = snapshot.val();
+      setDay(data);
     });
   }, []);
   
@@ -56,20 +52,22 @@ const Control = () => {
     const handleMoistureAndDayChange = (moistureSnapshot, daySnapshot) => {
       const moistureData = moistureSnapshot.val();
       const dayData = daySnapshot.val();
-      if (dayData === 5 || dayData > 4) {
-        setButton2On(true);
-        set(dryingRef, 1);
-      } else if (dayData < 5) {
+    
+      if (dayData < 5 || (dayData >= 5 && moistureData > 5.5 && moistureData < 7.5)) {
         setButton2On(false);
         set(dryingRef, 0);
-      } else if (moistureData < 5.5 || moistureData > 7.5) {
+      } else if (dayData === 5) {
         setButton2On(true);
         set(dryingRef, 1);
       } else {
         setButton2On(false);
-        set(dryingRef, 0);
+        set(dryingRef, 1);
       }
     };
+    
+    
+    
+    
   
     onValue(fermentationRef, handleFermentationChange);
     onValue(dryingRef, handleDryingChange);
@@ -111,7 +109,7 @@ const Control = () => {
     const db = getDatabase();
     if (day < 5) {
       return; // do nothing if day is less than 5
-      }
+    }
     set(ref(db, 'Data/Control'), {
       Fermentation: button1On ? 1 : 0,
       Drying: !button2On ? 1 : 0,
@@ -121,6 +119,7 @@ const Control = () => {
       console.error("Error updating database: ", error);
     });
   }
+  
 
   return (
     <div>
